@@ -44,6 +44,18 @@ jobs:
           echo "v=$V" >> "$GITHUB_OUTPUT"
           echo "CSS/JS publicados con ?v=$V"
 
+      - name: Revisar conexión y carpeta del servidor (solo simulacro)
+        if: inputs.simulacro == true
+        env:
+          S: ${{ secrets.FTP_SERVER }}
+          U: ${{ secrets.FTP_USERNAME }}
+          P: ${{ secrets.FTP_PASSWORD }}
+          D: ${{ vars.FTP_DIR }}
+        run: |
+          set -o pipefail
+          echo "== Raíz del FTP:";   curl -sS --ssl-reqd --list-only "ftp://$S/"   --user "$U:$P" | sort
+          echo "== Dentro de $D:";   curl -sS --ssl-reqd --list-only "ftp://$S/$D" --user "$U:$P" | sort
+
       - name: Subir por FTP (solo archivos que cambiaron)
         uses: SamKirkland/FTP-Deploy-Action@v4.3.5
         with:
