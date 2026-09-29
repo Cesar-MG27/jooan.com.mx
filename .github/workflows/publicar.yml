@@ -51,10 +51,13 @@ jobs:
           U: ${{ secrets.FTP_USERNAME }}
           P: ${{ secrets.FTP_PASSWORD }}
           D: ${{ vars.FTP_DIR }}
+        # Hostinger se conecta por IP y su certificado es *.hstgr.io, así que el nombre no
+        # coincide: --insecure mantiene el cifrado TLS pero no compara el nombre del certificado
+        # (igual que el paso de publicación).
         run: |
           set -o pipefail
-          echo "== Raíz del FTP:";   curl -sS --ssl-reqd --list-only "ftp://$S/"   --user "$U:$P" | sort
-          echo "== Dentro de $D:";   curl -sS --ssl-reqd --list-only "ftp://$S/$D" --user "$U:$P" | sort
+          echo "== Raíz del FTP:";   curl -sS --ssl-reqd --insecure --list-only "ftp://$S/"   --user "$U:$P" | sort
+          echo "== Dentro de $D:";   curl -sS --ssl-reqd --insecure --list-only "ftp://$S/$D" --user "$U:$P" | sort
 
       - name: Subir por FTP (solo archivos que cambiaron)
         uses: SamKirkland/FTP-Deploy-Action@v4.3.5
