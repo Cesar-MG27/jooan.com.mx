@@ -170,7 +170,17 @@ se copian a mano al array, junto con la fecha en `medicion`.
 
 ## Desplegar
 
-Sube a `public_html` **todo menos `_dev/`**:
+**Automático:** cada push a `main` (en VS Code: Commit → Sync) publica el sitio
+en Hostinger vía GitHub Actions ([.github/workflows/publicar.yml](.github/workflows/publicar.yml)).
+Sube por FTP **solo los archivos que cambiaron**, excluye `_dev/`, `README.md`,
+`CLAUDE.md` y `config.example.php`, nunca toca `api/config.php` del servidor y al
+final verifica que el sitio en vivo responda con la versión nueva.
+El avance se ve en la pestaña **Actions** del repo en GitHub.
+
+Para ver qué se subiría sin subir nada: GitHub → Actions → *Publicar en Hostinger*
+→ **Run workflow** (con "simulacro" marcado).
+
+Manual (si Actions no está disponible): sube a `public_html` **todo menos `_dev/`**:
 
 ```
 index.html  proyecto.html  404.html
@@ -193,8 +203,13 @@ css/  js/  api/  assets/
 ### Al cambiar CSS o JS
 
 `css/styles.css` y `js/*.js` se cachean un año, así que se piden con `?v=N`.
-**Sube el número en las tres páginas HTML** cada vez que los modifiques, o los
-visitantes que ya estuvieron seguirán viendo la versión vieja.
+**Con el despliegue automático ya no hay que tocarlo:** el workflow reemplaza
+todos los `?v=` de CSS/JS por el hash del último commit que modificó `css/` o
+`js/`. Si ese commit no cambió, la versión tampoco, y la caché se conserva.
+El `?v=` de `og-cover.jpg` sigue siendo manual (ver "Imagen para compartir").
+
+Si despliegas a mano, **sube el número en las tres páginas HTML** cada vez que los
+modifiques, o los visitantes que ya estuvieron seguirán viendo la versión vieja.
 
 Es **un solo número para todo el sitio**, no uno por archivo: al desplegar sube
 `?v=N` en los siete puntos aunque solo hayas tocado un archivo. Llevar contadores

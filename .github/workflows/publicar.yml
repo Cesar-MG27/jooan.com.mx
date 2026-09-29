@@ -1,0 +1,74 @@
+# Publica jooan.com.mx en Hostinger cada vez que haces push (Sync) a main.
+#
+# Configuración (una sola vez), en la terminal de VS Code:
+#   gh secret   set FTP_SERVER   -R Cesar-MG27/jooan.com.mx     # ej. ftp.jooan.com.mx
+#   gh secret   set FTP_USERNAME -R Cesar-MG27/jooan.com.mx     # ej. u123456789.jooan.com.mx
+#   gh secret   set FTP_PASSWORD -R Cesar-MG27/jooan.com.mx     # la escribes tú; nadie más la ve
+#   gh variable set FTP_DIR      -R Cesar-MG27/jooan.com.mx -b "/public_html/"
+#   gh variable set SITE_URL     -R Cesar-MG27/jooan.com.mx -b "https://jooan.com.mx/"
+# Mientras FTP_DIR no exista, el workflow se salta (no falla).
+#
+# Qué NO se sube: _dev/, README.md, CLAUDE.md, .github/, config.example.php.
+# api/config.php vive solo en el servidor: nunca se toca ni se borra.
+
+name: Publicar en Hostinger
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+    inputs:
+      simulacro:
+        description: "Solo mostrar qué se subiría (no sube nada)"
+        type: boolean
+        default: true
+
+concurrency:
+  group: publicar
+  cancel-in-progress: false
+
+jobs:
+  publicar:
+    if: vars.FTP_DIR != ''
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0   # necesario para calcular la versión de CSS/JS
+
+      - name: Versión de caché de CSS/JS (?v=)
+        id: version
+        run: |
+          V=$(git log -1 --format=%h -- css js)
+          sed -i -E "s/(\.(css|js))\?v=[0-9a-z]+/\1?v=$V/g" *.html
+          echo "v=$V" >> "$GITHUB_OUTPUT"
+          echo "CSS/JS publicados con ?v=$V"
+
+      - name: Subir por FTP (solo archivos que cambiaron)
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+        with:
+          server: ${{ secrets.FTP_SERVER }}
+          username: ${{ secrets.FTP_USERNAME }}
+          password: ${{ secrets.FTP_PASSWORD }}
+          protocol: ftps
+          server-dir: ${{ vars.FTP_DIR }}
+          dry-run: ${{ inputs.simulacro == true }}
+          exclude: |
+            **/.git*
+            **/.git*/**
+            .github/**
+            _dev/**
+            README.md
+            CLAUDE.md
+            **/config.example.php
+
+      - name: Verificar el sitio en vivo
+        if: inputs.simulacro != true && vars.SITE_URL != ''
+        run: |
+          sleep 5
+          code=$(curl -sL -o home.html -w "%{http_code}" "${{ vars.SITE_URL }}")
+          echo "HTTP $code"
+          test "$code" = "200"
+          grep -q "styles.css?v=${{ steps.version.outputs.v }}" home.html \
+            && echo "✔ Publicado: el sitio ya sirve la versión ${{ steps.version.outputs.v }}" \
+            || { echo "✘ El sitio responde pero no con la versión nueva (¿caché o carpeta FTP equivocada?)"; exit 1; }
