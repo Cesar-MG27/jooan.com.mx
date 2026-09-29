@@ -1,0 +1,7 @@
+# joan — estudio digital
+User-agent: *
+Allow: /
+Disallow: /api/
+Disallow: /_dev/
+
+Sitemap: https://jooan.com.mx/sitemap.xml
