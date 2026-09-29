@@ -1,0 +1,59 @@
+# Mantenimiento del servidor de jooan.com.mx (solo manual: Actions → Run workflow).
+#
+# 1. Respalda por FTP lo que no forma parte del sitio publicado (restos de desarrollo y
+#    carpetas que viven solo en el servidor) y lo deja como artefacto descargable 90 días:
+#      gh run download <id> -R Cesar-MG27/jooan.com.mx -n respaldo-servidor
+# 2. Con "borrar" marcado, además elimina del servidor los restos de desarrollo.
+#    Nunca toca almavera/, api/config.php ni el sitio publicado.
+
+name: Mantenimiento del servidor
+
+on:
+  workflow_dispatch:
+    inputs:
+      borrar:
+        description: "Borrar del servidor .git, .github, _dev, README.md y .gitignore (después de respaldarlos)"
+        type: boolean
+        default: false
+
+jobs:
+  mantenimiento:
+    runs-on: ubuntu-latest
+    env:
+      LFTP_PASSWORD: ${{ secrets.FTP_PASSWORD }}
+      U: ${{ secrets.FTP_USERNAME }}
+      S: ${{ secrets.FTP_SERVER }}
+      D: ${{ vars.FTP_DIR }}
+      # FTPS obligatorio; Hostinger usa IP + certificado *.hstgr.io (el nombre no coincide)
+      LFTP_OPTS: "set ftp:ssl-force true; set ftp:ssl-protect-data true; set ssl:verify-certificate no; set net:max-retries 2"
+    steps:
+      - name: Instalar lftp
+        run: sudo apt-get update -qq && sudo apt-get install -y -qq lftp
+
+      - name: Respaldar del servidor
+        run: |
+          mkdir -p respaldo
+          lftp --env-password -u "$U" "$S" -e "$LFTP_OPTS; cd $D; \
+            mirror --parallel=4 almavera respaldo/almavera; \
+            mirror --parallel=4 .git     respaldo/.git; \
+            mirror --parallel=4 .github  respaldo/.github; \
+            mirror --parallel=4 _dev     respaldo/_dev; \
+            get README.md  -o respaldo/README.md; \
+            get .gitignore -o respaldo/.gitignore; bye"
+          echo "== Respaldo:"; du -sh respaldo/* respaldo/.[!.]* 2>/dev/null
+          echo "Archivos: $(find respaldo -type f | wc -l)"
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: respaldo-servidor
+          path: respaldo/
+          include-hidden-files: true
+          retention-days: 90
+
+      - name: Borrar restos de desarrollo del servidor
+        if: inputs.borrar == true
+        run: |
+          lftp --env-password -u "$U" "$S" -e "$LFTP_OPTS; cd $D; \
+            rm -r .git; rm -r .github; rm -r _dev; rm README.md; rm .gitignore; bye"
+          echo "== Raíz del servidor después de limpiar:"
+          lftp --env-password -u "$U" "$S" -e "$LFTP_OPTS; cd $D; cls -1a; bye"
