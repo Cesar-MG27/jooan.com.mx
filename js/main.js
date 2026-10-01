@@ -17,10 +17,9 @@
   /* ----------------------------------------------------------
      PUNTOS DE CORTE
      Los mismos números que css/styles.css. Cuando se cruza uno,
-     las secciones que dependen de JS (trabajo, proceso) cambian
+     las secciones que dependen de JS (proceso, nav) cambian
      de modo en caliente, sin recargar.
      ---------------------------------------------------------- */
-  const MQ_WORK = window.matchMedia('(max-width:860px)');  // carrusel táctil
   const MQ_PROC = window.matchMedia('(max-width:1024px)'); // proceso sin pin
   const MQ_NAV  = window.matchMedia('(max-width:900px)');  // nav de hamburguesa
 
@@ -51,7 +50,7 @@
     initLiquidHover();
     initCursor();
     initMobileMenu();
-    initWorkCarousel();
+    initWorkPath();
 
     // Motor de scroll (rAF throttle)
     state.onScroll = onScroll;
@@ -116,38 +115,31 @@
   }
 
   /* ----------------------------------------------------------
-     PRELOADER — una frase que anticipa lo que viene y un telón corto
-     (~1.2 s). Un sitio que vende velocidad no puede hacer esperar.
-     Se salta sin pintarse cuando el <head> marcó html.intro-visto: ya
-     se vio en esta sesión, se llegó con ancla o se pidió menos
-     movimiento.
+     PRELOADER — el distintivo se pinta y queda en pantalla un momento
+     (la secuencia vive en css/styles.css). Solo se ve una vez por
+     sesión: se salta sin pintarse cuando el <head> marcó
+     html.intro-visto (ya se vio, se llegó con ancla o se pidió menos
+     movimiento).
      ---------------------------------------------------------- */
+  const PL_MS = 2600; // pintado completo a 1.85 s + pausa para apreciarlo
+  // Modo de ajuste (?preloader en la URL): el telón no sube, clic o
+  // espacio repiten la animación y Esc lo retira. No marca la sesión.
+  const PL_FIJO = /[?&]preloader\b/.test(location.search);
   function initPreloader() {
     const pre = ref('preloader');
 
     // Sin telón: se retira el nodo para que initTracking() no espere a
     // un preloader que nunca se mostró y cuente las vistas desde ya.
-    if (!pre || reducedMotion || document.documentElement.classList.contains('intro-visto')) {
+    const saltar = reducedMotion || document.documentElement.classList.contains('intro-visto');
+    if (!pre || (saltar && !PL_FIJO)) {
       if (pre) pre.remove();
       revealHero();
       return;
     }
 
-    try { sessionStorage.setItem('joan-intro', '1'); } catch (e) { /* sin storage: se verá otra vez */ }
-
-    // Palabra por palabra, como el manifiesto. El retardo de cada una
-    // sale de --i (el color y la transición viven en css/styles.css).
-    const line = ref('preloaderLine');
-    if (line) {
-      line.innerHTML = line.textContent.trim().split(/\s+/)
-        .map((w, i) => '<span class="pl-w" style="--i:' + i + '">' + w + '</span>').join(' ');
-    }
-    // El telón sube a ~1.3 s de la navegación, no del arranque de este
-    // script (que espera a Lenis/GSAP de la CDN), pero la frase queda en
-    // pantalla al menos 0.9 s. La línea de progreso dura exactamente eso.
-    const espera = Math.max(900, 1300 - performance.now());
-    pre.style.setProperty('--pl-dur', espera + 'ms');
-    requestAnimationFrame(() => requestAnimationFrame(() => pre.classList.add('is-on')));
+    // Doble rAF: el estado inicial (sin pintar) tiene que llegar a
+    // pintarse para que la transición arranque.
+    const play = () => requestAnimationFrame(() => requestAnimationFrame(() => pre.classList.add('is-on')));
 
     const lift = () => {
       if (state.preLifted) return;
@@ -159,10 +151,33 @@
       revealHero();
       setTimeout(() => pre.remove(), 900);
     };
-    state.preTimer = setTimeout(lift, espera);
+
+    if (PL_FIJO) {
+      // Repetir = quitar is-on sin transición (vuelve al inicio al
+      // instante) y volver a ponerla con la transición normal.
+      const replay = () => {
+        pre.classList.add('pl-reset');
+        pre.classList.remove('is-on');
+        void pre.offsetWidth;
+        pre.classList.remove('pl-reset');
+        play();
+      };
+      const onKey = (e) => {
+        if (e.code === 'Space') { e.preventDefault(); replay(); }
+        if (e.key === 'Escape') { document.removeEventListener('keydown', onKey); lift(); }
+      };
+      pre.addEventListener('click', replay);
+      document.addEventListener('keydown', onKey);
+      play();
+      return;
+    }
+
+    try { sessionStorage.setItem('joan-intro', '1'); } catch (e) { /* sin storage: se verá otra vez */ }
+    play();
+    state.preTimer = setTimeout(lift, PL_MS);
 
     // Seguridad: nunca dejar al usuario atrapado tras el preloader
-    state.safety = setTimeout(lift, 2500);
+    state.safety = setTimeout(lift, PL_MS + 1500);
   }
 
   /* ----------------------------------------------------------
@@ -697,70 +712,41 @@
       ScrollTrigger.getAll().forEach((s) => { if (s.vars && s.vars.id === 'procST') s.kill(); });
     }
     state.procST = null;
-    if (state.procIO) { state.procIO.disconnect(); state.procIO = null; }
 
     const steps = Array.from(stepsWrap.querySelectorAll('[data-step]'));
-    const bodies = steps.map((s) => s.querySelector('[data-step-body]'));
     const N = steps.length;
     if (!N) return;
+    const cEl = ref('procCount');
+    const barEl = ref('procBar');
+    const clear = () => steps.forEach((s) => s.style.removeProperty('--o'));
 
-    /* --- Móvil / tablet: sin pin. Los cuatro pasos se leen abiertos y
-       el contador lo lleva un IntersectionObserver. El CSS ya neutraliza
-       opacidad y transform; aquí solo hay que borrar los estilos inline
-       que pudo dejar el scrub antes de cruzar el breakpoint. --- */
+    /* --- Tablet / móvil: sin pin. Los cuatro pasos quedan en columna,
+       completos (el CSS los acomoda). --- */
     if (MQ_PROC.matches) {
-      steps.forEach((s) => {
-        s.style.opacity = '';
-        s.style.transform = '';
-        const t = s.querySelector('h3');
-        if (t) t.style.color = '';
-      });
-      bodies.forEach((b) => { if (b) { b.style.height = ''; b.style.opacity = ''; } });
-
-      const cEl = ref('procCount');
-      const barEl = ref('procBar');
-      state.procIO = new IntersectionObserver((entries) => {
-        entries.forEach((e) => {
-          if (!e.isIntersecting) return;
-          const i = steps.indexOf(e.target);
-          if (i < 0) return;
-          if (cEl) cEl.textContent = String(i + 1).padStart(2, '0');
-          if (barEl) barEl.style.width = (((i + 1) / N) * 100).toFixed(1) + '%';
-        });
-      }, { rootMargin: '-45% 0px -45% 0px' });
-      steps.forEach((s) => state.procIO.observe(s));
+      clear();
       return;
     }
 
-    // A partir de aquí: escritorio, con pin y scrub
-    const natural = bodies.map((b) => b.scrollHeight);
-
+    // Escritorio: pin + scrub. Cada paso se queda quieto un tramo (HOLD)
+    // y el resto del tramo es el barrido al siguiente. Con menos
+    // movimiento no hay barrido: el paso cambia de golpe.
+    const HOLD = 0.45;
+    const ease = (t) => t * t * (3 - 2 * t);
     const apply = (p) => {
-      for (let i = 0; i < N; i++) {
-        const center = (i + 0.5) / N;
-        const d = Math.abs(p - center) / (1 / N);
-        const focus = Math.max(0, 1 - d);
-        const e = focus * focus * (3 - 2 * focus); // smoothstep
-        const step = steps[i];
-        step.style.opacity = (0.22 + 0.78 * e).toFixed(3);
-        step.style.transform = 'translateX(' + ((1 - e) * 16).toFixed(1) + 'px)';
-        const title = step.querySelector('h3');
-        if (title) title.style.color = 'rgba(235,229,215,' + (0.5 + 0.5 * e).toFixed(3) + ')';
-        const body = bodies[i];
-        if (body) { body.style.height = (natural[i] * e).toFixed(1) + 'px'; body.style.opacity = e.toFixed(3); }
-      }
-      const active = Math.max(1, Math.min(N, Math.floor(p * N) + 1));
-      const cEl = ref('procCount');
+      const x = p * (N - 1);
+      const k = Math.min(N - 2, Math.floor(x));
+      const f = x - k;
+      const t = ease(Math.min(1, Math.max(0, (f - HOLD / 2) / (1 - HOLD))));
+      let at = N > 1 ? k + t : 0; // paso actual, fraccionario
+      if (reducedMotion) at = Math.round(at);
+      steps.forEach((s, i) => {
+        const o = Math.max(-1, Math.min(1, i - at));
+        s.style.setProperty('--o', o.toFixed(4));
+      });
+      const active = Math.round(at) + 1;
       if (cEl) cEl.textContent = String(active).padStart(2, '0');
-      const bar = ref('procBar');
-      if (bar) bar.style.width = (p * 100).toFixed(1) + '%';
+      if (barEl) barEl.style.width = (p * 100).toFixed(1) + '%';
     };
-
-    if (reducedMotion) {
-      bodies.forEach((b, i) => { if (b) { b.style.height = natural[i] + 'px'; b.style.opacity = '1'; } });
-      steps.forEach((s) => { s.style.opacity = '1'; });
-      return;
-    }
 
     state.procST = ScrollTrigger.create({
       id: 'procST',
@@ -772,31 +758,6 @@
     });
     ScrollTrigger.refresh();
     apply(0);
-
-    const remeasure = () => {
-      if (MQ_PROC.matches) return; // en móvil las alturas son automáticas
-      bodies.forEach((b, i) => {
-        if (!b) return;
-        const prev = b.style.height; b.style.height = 'auto';
-        natural[i] = b.scrollHeight; b.style.height = prev;
-      });
-      apply(state.procST ? state.procST.progress : 0);
-      ScrollTrigger.refresh();
-    };
-    // initProcess puede reejecutarse al cruzar un breakpoint: un solo listener
-    state.procRemeasure = remeasure;
-    if (!state.procResizeBound) {
-      state.procResizeBound = true;
-      window.addEventListener('resize', () => {
-        clearTimeout(state.procResizeT);
-        state.procResizeT = setTimeout(() => {
-          if (state.procRemeasure) state.procRemeasure();
-        }, 160);
-      });
-    }
-    if (document.fonts && document.fonts.ready) {
-      document.fonts.ready.then(() => setTimeout(remeasure, 60));
-    }
   }
 
   /* ----------------------------------------------------------
@@ -887,24 +848,45 @@
         document.documentElement.classList.toggle('nav-solid', solid);
       }
 
-      // Parallax + fade del hero
+      // Parallax + fade del hero: el nombre sube más rápido que el scroll
+      // y se desvanece por completo antes de salir; el pie (filete +
+      // descripción + enlaces) sube al mismo paso, sin desvanecerse.
+      // Con reduced-motion solo se desvanece el nombre.
       const hero = ref('hero');
       const wm = ref('wordmark');
-      if (hero && wm && y < vh * 1.2) {
-        const p = Math.min(1, y / vh);
-        wm.style.transform = 'translateY(' + (y * 0.18) + 'px) scale(' + (1 - p * 0.04) + ')';
-        wm.style.opacity = String(1 - p * 0.85);
+      if (hero && wm) {
+        const p = Math.min(1, y / (vh * 0.6));
+        if (p !== state.wmP) {
+          state.wmP = p;
+          const dy = reducedMotion ? 0 : -p * vh * 0.25;
+          wm.style.transform = 'translateY(' + dy + 'px) scale(' + (1 - p * 0.04) + ')';
+          wm.style.opacity = String(1 - p);
+          const foot = ref('heroFoot');
+          if (foot) foot.style.transform = 'translateY(' + dy + 'px)';
+        }
       }
 
-      // Iluminado de palabras del manifiesto
-      const man = ref('manifesto');
-      if (man && state.mwords && state.mwords.length) {
-        const r = man.getBoundingClientRect();
-        const total = r.height + vh;
-        const prog = Math.min(1, Math.max(0, (vh - r.top) / total));
-        const lit = Math.floor(prog * 1.7 * state.mwords.length);
-        state.mwords.forEach((w, i) => {
-          w.style.color = i < lit ? 'var(--tx)' : 'var(--tx-muted)';
+      // Neblina del manifiesto, medida con el centro del texto:
+      // - arranca cuando el borde inferior del texto está en MF_START
+      //   (ya entró entero por abajo);
+      // - la frase completa queda nítida cuando su centro llega a la
+      //   mitad de la pantalla.
+      const mtext = ref('manifestoText');
+      const ws = state.mwords;
+      if (mtext && ws && ws.length) {
+        const MF_START = 0.95;
+        // Frente de niebla de FOG palabras: cada una pasa de 0 a 1 mientras
+        // el frente la cruza, así se aclaran varias a la vez y no de golpe.
+        const FOG = 3;
+        const r = mtext.getBoundingClientRect();
+        const c = r.top + r.height / 2;
+        const cStart = vh * MF_START - r.height / 2;
+        const cEnd = vh * 0.5;
+        const prog = Math.min(1, Math.max(0, (cStart - c) / (cStart - cEnd)));
+        const front = prog * (ws.length - 1 + FOG);
+        ws.forEach((w, i) => {
+          const t = Math.min(1, Math.max(0, (front - i) / FOG));
+          w.style.setProperty('--t', t.toFixed(3));
         });
       }
 
@@ -912,66 +894,67 @@
     });
   }
 
-  /* WORK — pin-scrub horizontal (solo escritorio)
-     En móvil el CSS convierte la fila en un carrusel con scroll-snap
-     nativo, así que aquí no se toca el transform: lo movería el dedo
-     y el JS a la vez. */
-  function onScrollWork(y, vh) {
-    if (MQ_WORK.matches) return;
-    const track = ref('workTrack');
-    const row = ref('workRow');
-    if (!track || !row) return;
-    const r = track.getBoundingClientRect();
-    const total = r.height - vh;
-    if (total <= 0) return;
-    const prog = Math.min(1, Math.max(0, -r.top / total));
-    const maxX = Math.max(0, row.scrollWidth - window.innerWidth);
-    row.style.transform = 'translate3d(' + (-prog * maxX) + 'px,0,0)';
-    setWorkProgress(prog, row);
-  }
-
-  /* Indicador compartido por los dos modos */
-  function setWorkProgress(prog, row) {
-    const bar = ref('wkProgress');
-    if (bar) bar.style.width = (prog * 100) + '%';
-    const idx = ref('wkIndex');
-    const count = (row && row.children.length) || 1;
-    if (idx) idx.textContent = String(Math.min(count, Math.floor(prog * (count - 0.01)) + 1)).padStart(2, '0');
-  }
-
-  /* WORK — carrusel táctil (móvil)
-     La misma barra de progreso, alimentada por el scroll real de la
-     fila en lugar del scroll de la página. */
-  function initWorkCarousel() {
+  /* WORK — cámara que baja y avanza a la derecha
+     El CSS aplica --x (desplazamiento horizontal, px) y --d (distancia al
+     centro, en pantallas) como movimiento; aquí solo se mide.
+     Se usan offsetTop/offsetHeight: la posición sin los transforms, si no,
+     el movimiento se retroalimentaría. */
+  function initWorkPath() {
     const row = ref('workRow');
     if (!row) return;
+    const cards = Array.from(row.querySelectorAll('.wk-card'));
+    state.wkCards = cards;
 
-    const sync = () => {
-      if (!MQ_WORK.matches) return;
-      const max = row.scrollWidth - row.clientWidth;
-      const prog = max > 0 ? Math.min(1, Math.max(0, row.scrollLeft / max)) : 0;
-      setWorkProgress(prog, row);
-    };
+    // Revelado reversible: .is-in entra y sale con la tarjeta (no se
+    // deja de observar, a diferencia de initReveal).
+    if (!('IntersectionObserver' in window)) {
+      cards.forEach((c) => c.classList.add('is-in'));
+      return;
+    }
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach((e) => e.target.classList.toggle('is-in', e.isIntersecting));
+    }, { threshold: 0.2, rootMargin: '-6% 0px -6% 0px' });
+    cards.forEach((c) => io.observe(c));
+  }
 
-    row.addEventListener('scroll', () => {
-      if (state.wkRAF) return;
-      state.wkRAF = requestAnimationFrame(() => { state.wkRAF = null; sync(); });
-    }, { passive: true });
+  function onScrollWork(_y, vh) {
+    const cards = state.wkCards;
+    if (reducedMotion || !cards || !cards.length) return;
+    const base = cards[0].offsetParent.getBoundingClientRect().top;
+    const mid = cards.map((c) => base + c.offsetTop + c.offsetHeight / 2);
+    if (mid[0] > vh * 2.5 || mid[mid.length - 1] < -vh * 1.5) return; // sección fuera de vista
 
-    // Al cambiar de modo hay que limpiar lo que dejó el otro
-    const swap = () => {
-      if (MQ_WORK.matches) {
-        row.style.transform = '';       // el pin ya no manda
-        row.scrollLeft = 0;
-        setWorkProgress(0, row);
-      } else {
-        row.scrollLeft = 0;             // el carrusel ya no manda
-        onScroll();
-      }
-      if (typeof ScrollTrigger !== 'undefined') ScrollTrigger.refresh();
-    };
-    onMQ(MQ_WORK, swap);
-    swap();
+    // Índice (fraccionario) de la tarjeta que pasa por el centro. Se fija
+    // en 0 antes de la primera y en n-1 después de la última: la cámara
+    // arranca con la primera a la izquierda y para con la última a la derecha.
+    const c0 = vh / 2;
+    const n = mid.length;
+    let at;
+    if (n === 1) at = 0;
+    else if (c0 <= mid[0]) at = (c0 - mid[0]) / (mid[1] - mid[0]);
+    else if (c0 >= mid[n - 1]) at = n - 1 + (c0 - mid[n - 1]) / (mid[n - 1] - mid[n - 2]);
+    else {
+      let i = 0;
+      while (c0 > mid[i + 1]) i++;
+      at = i + (c0 - mid[i]) / (mid[i + 1] - mid[i]);
+    }
+    at = Math.max(0, Math.min(n - 1, at));
+
+    // Hueco libre a los lados de una tarjeta centrada y paso entre tarjetas
+    const row = cards[0].parentElement;
+    const cs = getComputedStyle(row);
+    const inner = row.clientWidth - parseFloat(cs.paddingLeft) - parseFloat(cs.paddingRight);
+    const avail = Math.max(0, inner - cards[0].offsetWidth);
+    const stepRaw = cs.getPropertyValue('--wk-step').trim();
+    const step = parseFloat(stepRaw) * (stepRaw.endsWith('vw') ? window.innerWidth / 100 : 1);
+    // La tarjeta del centro va de alineada a la izquierda (-avail/2) a
+    // alineada a la derecha (+avail/2); las demás, a un paso por índice.
+    const lead = -avail / 2 + (n > 1 ? avail * at / (n - 1) : 0);
+
+    cards.forEach((c, i) => {
+      c.style.setProperty('--x', (lead + (i - at) * step).toFixed(1) + 'px');
+      c.style.setProperty('--d', Math.max(-1.5, Math.min(1.5, (mid[i] - c0) / vh)).toFixed(3));
+    });
   }
 
   /* ----------------------------------------------------------
@@ -1129,8 +1112,11 @@
       ctas.forEach((el) => io.observe(el));
     };
     state.arrancarVistas = arrancar;
-    if (ref('preloader')) state.ctaEspera = setTimeout(arrancar, 3000);
-    else arrancar();
+    // En modo de ajuste el telón no sube solo: sin red, para no contar
+    // vistas de CTAs tapados mientras se ajusta.
+    if (ref('preloader')) {
+      if (!PL_FIJO) state.ctaEspera = setTimeout(arrancar, PL_MS + 2000);
+    } else arrancar();
   }
 
   /* ----------------------------------------------------------
