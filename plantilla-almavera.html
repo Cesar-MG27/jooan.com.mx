@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="es-MX">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<!-- Página de venta de la plantilla Alma Vera (producto propio de joan).
+     Sin precio a propósito: la página lleva a apartarla por WhatsApp.
+     ⚠ Son 7 lugares. Al vender cada una, baja el número en los tres
+       "quedan 7 lugares" de esta página y en la tarjeta de index.html;
+       con la última vendida, cambia los botones de apartar.
+     ⚠ El panel de contenido y la galería privada por pareja deben estar
+       listos antes de cerrar la primera venta (el demo actual es estático). -->
+
+<title>Alma Vera — plantilla premium para fotógrafos de bodas · joan</title>
+<meta name="description" content="Alma Vera: el sitio para fotógrafos de bodas que quieren verse al nivel de lo que cobran. Panel para actualizar fotos y textos, galería privada para cada pareja y edición limitada a siete estudios.">
+<link rel="canonical" href="https://jooan.com.mx/plantilla-almavera.html">
+<meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1">
+<meta name="author" content="joan">
+<meta name="theme-color" content="#ECE7DC" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#0D0C0A" media="(prefers-color-scheme: dark)">
+
+<meta property="og:type" content="product">
+<meta property="og:site_name" content="joan — estudio digital">
+<meta property="og:url" content="https://jooan.com.mx/plantilla-almavera.html">
+<meta property="og:title" content="Alma Vera — plantilla premium para fotógrafos de bodas">
+<meta property="og:description" content="Panel para actualizar fotos y textos, galería privada para cada pareja y edición limitada a siete estudios.">
+<meta property="og:locale" content="es_MX">
+<meta property="og:image" content="https://jooan.com.mx/assets/almavera-mockup.webp">
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Alma Vera — plantilla premium para fotógrafos de bodas">
+<meta name="twitter:description" content="Panel para actualizar fotos y textos, galería privada para cada pareja y edición limitada a siete estudios.">
+<meta name="twitter:image" content="https://jooan.com.mx/assets/almavera-mockup.webp">
+
+<!-- Iconos -->
+<link rel="icon" href="/assets/favicon.svg?v=2" type="image/svg+xml">
+<link rel="apple-touch-icon" href="/assets/apple-touch-icon.png?v=2">
+<link rel="manifest" href="/site.webmanifest">
+
+<!-- Fuentes -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Prata&amp;family=Geist:wght@400;500;600&amp;family=Geist+Mono:wght@400;500&amp;display=swap">
+
+<!-- Estilos -->
+<link rel="stylesheet" href="css/styles.css?v=9">
+
+<!-- Tema inicial + marca de JS -->
+<script>(function(){var e=document.documentElement;e.className+=' js';try{var p=localStorage.getItem('joan-theme')||'device';var d=p==='dark'||(p==='device'&&window.matchMedia('(prefers-color-scheme:dark)').matches);e.dataset.theme=d?'dark':'light';}catch(x){e.dataset.theme='light';}})();</script>
+
+<!-- Librerías + scripts del sitio -->
+<script defer src="https://cdn.jsdelivr.net/npm/@studio-freight/lenis@1.0.42/dist/lenis.min.js"></script>
+<script defer src="js/main.js?v=9"></script>
+
+<!-- Datos estructurados: producto, sin precio publicado -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Product",
+  "name": "Alma Vera",
+  "description": "Plantilla premium para fotógrafos de bodas: portada editorial, panel para actualizar fotografías y textos, y galería privada por pareja con usuario y contraseña. Edición limitada a siete estudios.",
+  "image": "https://jooan.com.mx/assets/almavera-mockup.webp",
+  "url": "https://jooan.com.mx/plantilla-almavera.html",
+  "category": "Sitio web para fotografía de bodas",
+  "brand": { "@type": "Organization", "@id": "https://jooan.com.mx/#estudio", "name": "joan — estudio digital", "url": "https://jooan.com.mx/" }
+}
+</script>
+
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-YN6P41N6KZ"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-YN6P41N6KZ');
+</script>
+</head>
+<body data-pagina="plantilla" class="pj-split-page">
+
+<div data-ref="root" class="page">
+
+  <!-- FILM GRAIN -->
+  <div aria-hidden="true" class="grain"></div>
+
+  <!-- NAV -->
+  <nav data-ref="navEl" class="nav pj-nav" aria-label="Principal">
+    <div class="nav-left">
+      <a href="index.html#trabajo" class="lk-dim pj-back"><span aria-hidden="true">←</span> Trabajo</a>
+    </div>
+
+    <a href="index.html" class="nav-logo">joan</a>
+
+    <div class="nav-right">
+      <span data-ref="navClock" class="nav-clock">MX —:—</span>
+      <div class="nav-theme" role="group" aria-label="Tema">
+        <button type="button" data-theme-opt="light" aria-label="Tema claro" title="Claro">☀</button>
+        <button type="button" data-theme-opt="device" aria-label="Tema automático" title="Automático">◐</button>
+        <button type="button" data-theme-opt="dark" aria-label="Tema oscuro" title="Oscuro">☾</button>
+      </div>
+      <a data-cta="nav_almavera_apartar" href="https://wa.me/525634559095?text=Hola%20joan%2C%20vi%20la%20plantilla%20Alma%20Vera%20y%20quiero%20saber%20si%20a%C3%BAn%20hay%20lugar%20para%20mi%20estudio." target="_blank" rel="noopener" class="nav-pill" aria-label="Apartar Alma Vera por WhatsApp">Apartar <span class="arrow" aria-hidden="true">↗</span></a>
+    </div>
+  </nav>
+
+  <main id="inicio">
+
+    <!-- FICHA EN DOS COLUMNAS: la imagen se queda fija a la izquierda
+         mientras la información sube a la derecha. -->
+    <div class="pj-split">
+      <aside class="pj-aside">
+        <div class="pj-aside-in">
+          <a data-cta="almavera_demo_imagen" data-hint="Ver demo en vivo" class="wk-media pj-shot" href="https://jooan.com.mx/almavera/" target="_blank" rel="noopener" aria-label="Ver el demo en vivo de Alma Vera">
+            <img class="wk-img" src="assets/almavera-mockup.webp" alt="Sitio Alma Vera, plantilla premium para fotografía de bodas, abierto en una laptop" width="1672" height="940" decoding="async">
+          </a>
+          <div class="pj-shot-meta">
+            <a data-cta="almavera_demo_dominio" href="https://jooan.com.mx/almavera/" target="_blank" rel="noopener" class="lk-dim">jooan.com.mx/almavera ↗</a>
+            <span>Edición limitada a siete estudios</span>
+          </div>
+        </div>
+      </aside>
+
+      <div class="pj-info">
+
+        <!-- ENCABEZADO -->
+        <section class="pj-head">
+          <div class="pj-tag">
+            <span>Plantilla premium · Edición limitada</span>
+            <span class="pv-seats"><i aria-hidden="true"></i>Disponible · quedan 7 lugares</span>
+          </div>
+
+          <h1 class="pj-title">Alma Vera</h1>
+          <p class="pj-sector">El sitio para fotógrafos y estudios de bodas</p>
+
+          <div class="pj-lead">
+            <p>Tu trabajo ya se ve premium. Alma Vera hace que tu sitio también: una portada editorial que deja hablar a tus fotos, un panel para que lo actualices tú mismo y una galería privada para cada pareja.</p>
+            <div class="pj-actions">
+              <a data-cta="almavera_apartar_inicio" href="https://wa.me/525634559095?text=Hola%20joan%2C%20vi%20la%20plantilla%20Alma%20Vera%20y%20quiero%20saber%20si%20a%C3%BAn%20hay%20lugar%20para%20mi%20estudio." target="_blank" rel="noopener" class="btn-submit">Apartar la mía <span aria-hidden="true">→</span></a>
+              <a data-cta="almavera_demo_inicio" href="https://jooan.com.mx/almavera/" target="_blank" rel="noopener" class="cta-underline">Ver demo en vivo <span aria-hidden="true">↗</span></a>
+            </div>
+          </div>
+        </section>
+
+        <!-- PARA QUIÉN / POR QUÉ SIETE -->
+        <section class="pj-body">
+          <div class="pj-cols">
+            <div data-reveal>
+              <h2 class="eyebrow">(01) — Para quién es</h2>
+              <p>Para fotógrafos que ya tienen bodas que presumir y un sitio que no les hace justicia. Tus parejas te eligen por cómo cuentas su día; tu sitio debería contarlo igual de bien antes de que te escriban.</p>
+            </div>
+            <div data-reveal>
+              <h2 class="eyebrow">(02) — Por qué solo siete</h2>
+              <p>Una plantilla deja de ser especial cuando la usa todo el mundo. Alma Vera se entrega a siete estudios y después se retira: tu sitio sigue siendo tuyo y no el de tu competencia.</p>
+            </div>
+          </div>
+        </section>
+
+        <!-- LO QUE CAMBIA -->
+        <section class="pj-body pj-body--wide">
+          <h2 class="eyebrow" data-reveal>(03) — Lo que cambia para tu estudio</h2>
+          <div class="pv-feats">
+            <article class="pv-feat" data-reveal>
+              <span class="pv-feat-n">01</span>
+              <h3>Tu portafolio al día, sin depender de nadie</h3>
+              <p>Desde un panel cambias fotografías, series y textos sin tocar código. Entregas una boda y esa misma semana ya puede estar en tu sitio.</p>
+            </article>
+            <article class="pv-feat" data-reveal>
+              <span class="pv-feat-n">02</span>
+              <h3>Una galería privada para cada pareja</h3>
+              <p>Cada pareja entra con su usuario y contraseña a un espacio con tu marca para ver sus fotos. La entrega deja de ser un enlace cualquiera y se vuelve parte de tu servicio.</p>
+            </article>
+            <article class="pv-feat" data-reveal>
+              <span class="pv-feat-n">03</span>
+              <h3>Un diseño a la altura de lo que cobras</h3>
+              <p>Portada editorial a pantalla completa, tipografía serif y la fotografía como protagonista. Se lee como una revista de bodas, no como una plantilla más.</p>
+            </article>
+            <article class="pv-feat" data-reveal>
+              <span class="pv-feat-n">04</span>
+              <h3>Hecha a tu nombre</h3>
+              <p>Se adapta a tu marca, tu paleta, tu ciudad y tus bodas, y se publica en tu dominio con contacto directo por WhatsApp para que las parejas te escriban sin rodeos.</p>
+            </article>
+          </div>
+        </section>
+
+        <!-- QUÉ INCLUYE + CÓMO SE APARTA -->
+        <section class="pj-body pj-body--wide">
+          <div class="pj-cols pj-cols--top">
+            <div data-reveal>
+              <h2 class="eyebrow">(04) — Qué incluye</h2>
+              <ul class="pj-list">
+                <li><span class="pj-list-n">01</span><span class="pj-list-t">Sitio editorial adaptado a tu marca y tu ciudad</span></li>
+                <li><span class="pj-list-n">02</span><span class="pj-list-t">Panel para actualizar fotografías y textos</span></li>
+                <li><span class="pj-list-n">03</span><span class="pj-list-t">Galería privada por pareja, con usuario y contraseña</span></li>
+                <li><span class="pj-list-n">04</span><span class="pj-list-t">Versión para celular, tablet y escritorio, con imágenes optimizadas</span></li>
+                <li><span class="pj-list-n">05</span><span class="pj-list-t">Publicación en tu dominio y contacto directo por WhatsApp</span></li>
+              </ul>
+            </div>
+            <div data-reveal>
+              <h2 class="eyebrow">(05) — Cómo la apartas</h2>
+              <ul class="pj-list">
+                <li><span class="pj-list-n">01</span><span class="pj-list-t">Me escribes y te confirmo si aún queda lugar.</span></li>
+                <li><span class="pj-list-n">02</span><span class="pj-list-t">Platicamos de tu estudio: tu nombre, tus colores, tu ciudad y tus mejores bodas.</span></li>
+                <li><span class="pj-list-n">03</span><span class="pj-list-t">La adapto, la publico y te enseño a usar el panel. Desde ahí, el sitio es tuyo.</span></li>
+              </ul>
+            </div>
+          </div>
+        </section>
+
+      </div>
+    </div>
+
+    <!-- CIERRE -->
+    <section data-nav-dark class="pj-next">
+      <div class="pj-close pv-close">
+        <div>
+          <span class="pv-seats pv-seats--ink"><i aria-hidden="true"></i>Disponible · quedan 7 lugares</span>
+          <h2 class="h-sec">¿Tu estudio será uno de los siete?</h2>
+        </div>
+        <div class="pj-actions">
+          <a data-cta="almavera_apartar_cierre" href="https://wa.me/525634559095?text=Hola%20joan%2C%20vi%20la%20plantilla%20Alma%20Vera%20y%20quiero%20saber%20si%20a%C3%BAn%20hay%20lugar%20para%20mi%20estudio." target="_blank" rel="noopener" class="btn-submit">Apartar la mía <span aria-hidden="true">→</span></a>
+          <a data-cta="almavera_demo_cierre" href="https://jooan.com.mx/almavera/" target="_blank" rel="noopener" class="lk-dim pj-close-alt">Ver demo en vivo <span aria-hidden="true">↗</span></a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- FOOTER -->
+  <footer data-nav-dark class="ft">
+    <div class="ft-in">
+
+      <div class="ft-top">
+        <div>
+          <div class="ft-eyebrow">Siguiente paso</div>
+          <p class="ft-claim">Siete lugares. Uno puede ser el de tu estudio.</p>
+        </div>
+        <a data-cta="footer_almavera_apartar" class="ft-cta" href="https://wa.me/525634559095?text=Hola%20joan%2C%20vi%20la%20plantilla%20Alma%20Vera%20y%20quiero%20saber%20si%20a%C3%BAn%20hay%20lugar%20para%20mi%20estudio." target="_blank" rel="noopener">Apartar por WhatsApp <span aria-hidden="true">↗</span></a>
+      </div>
+
+      <div class="ft-grid">
+        <div>
+          <div class="ft-label">El estudio</div>
+          <p class="ft-note">Estudio de una sola persona en Ciudad de México. Sin intermediarios: cada sitio lo piensa, lo adapta y lo publica quien te va a atender.</p>
+          <div class="ft-status"><i aria-hidden="true"></i> Disponible para proyectos</div>
+        </div>
+
+        <div>
+          <div class="ft-label">Navegación</div>
+          <ul class="ft-list">
+            <li><a class="ft-link" href="index.html#trabajo">Trabajo</a></li>
+            <li><a class="ft-link" href="index.html#proceso">Proceso</a></li>
+            <li><a class="ft-link" href="index.html#precios">Precios</a></li>
+            <li><a class="ft-link" href="index.html#sobre">Sobre joan</a></li>
+            <li><a class="ft-link" href="index.html#contacto">Contacto</a></li>
+          </ul>
+        </div>
+
+        <div>
+          <div class="ft-label">Proyectos</div>
+          <ul class="ft-list">
+            <li><a data-cta="footer_proyecto_almavera" class="ft-link" href="plantilla-almavera.html">Alma Vera <small>2026</small></a></li>
+            <li><a data-cta="footer_proyecto_metroenergy" class="ft-link" href="proyecto.html?p=metroenergy">MetroEnergy <small>2026</small></a></li>
+            <li><a data-cta="footer_proyecto_dolphins" class="ft-link" href="proyecto.html?p=dolphins">Dolphin's <small>2026</small></a></li>
+            <li><a data-cta="footer_proyecto_stz_toluca" class="ft-link" href="proyecto.html?p=stz-toluca">STZ Toluca <small>2026</small></a></li>
+            <li><a data-cta="footer_proyecto_zame" class="ft-link" href="proyecto.html?p=zame">ZAME <small>2024</small></a></li>
+          </ul>
+        </div>
+
+        <div>
+          <div class="ft-label">Contacto</div>
+          <ul class="ft-list">
+            <li><a data-cta="footer_whatsapp" class="ft-link" href="https://wa.me/525634559095" target="_blank" rel="noopener">WhatsApp <small>+52 56 3455 9095</small></a></li>
+            <li><a data-cta="footer_email" class="ft-link" href="mailto:hola@jooan.com.mx">hola@jooan.com.mx</a></li>
+          </ul>
+          <div class="ft-status ft-status--static"><i aria-hidden="true"></i> CDMX · atiendo todo México</div>
+        </div>
+      </div>
+
+      <a href="index.html" class="ft-mark-link" aria-label="Volver al inicio"><span class="ft-mark" aria-hidden="true">joan</span></a>
+    </div>
+
+    <div class="ft-bottom">
+      <div>© 2026 joan. Todos los derechos reservados.</div>
+      <div class="ft-bottom-end">
+        <span>Diseñado y desarrollado en CDMX</span>
+        <span class="sep">/</span>
+        <a class="ft-up" href="#inicio">Volver arriba <span aria-hidden="true">↑</span></a>
+      </div>
+    </div>
+  </footer>
+
+</div>
+
+</body>
+</html>

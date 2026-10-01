@@ -29,6 +29,14 @@
 
   const PROYECTOS = [
     {
+      // Plantilla propia, no proyecto de cliente: tiene su propia página de
+      // venta (plantilla-almavera.html). Aquí solo vive para el orden y la
+      // navegación anterior/siguiente; ?p=almavera redirige a esa página.
+      slug: 'almavera',
+      nombre: 'Alma Vera',
+      pagina: 'plantilla-almavera.html',
+    },
+    {
       slug: 'metroenergy',
       nombre: 'MetroEnergy Autoconsumos',
       sector: 'Autoconsumo de diésel',
@@ -40,13 +48,13 @@
       cliente: 'MetroEnergy',
       rol: 'Diseño y desarrollo',
       tipo: 'Sitio institucional',
-      resumen: 'Un sitio que explica con claridad qué es el autoconsumo de diésel y para qué sirve, dirigido a flotas y empresas que quieren controlar su suministro de combustible.',
-      reto: 'El autoconsumo de diésel es un servicio técnico que la mayoría de los clientes potenciales no conoce por su nombre. El sitio tenía que explicar el modelo —instalación, almacenamiento y despacho en las instalaciones del propio cliente— sin caer en jerga, y transmitir cumplimiento normativo desde la primera pantalla.',
-      solucion: 'Una estructura corta y guiada: qué es el servicio, qué incluye la instalación, quién lo necesita y cómo empezar. El diseño apuesta por fotografía real de operación y una jerarquía tipográfica sobria, con puntos de contacto repartidos por toda la página para que solicitar información nunca esté a más de un clic.',
+      resumen: 'Un sitio que convierte un servicio técnico en una oferta que un dueño de flota entiende en un minuto: qué es el autoconsumo de diésel, para quién es y cómo contratarlo.',
+      reto: 'MetroEnergy vende algo que sus clientes todavía no saben nombrar, y lo necesitaba en línea en cinco días. El sitio tenía que explicar el servicio en los primeros segundos —o el interés se perdía antes de volverse una llamada— y estar listo a tiempo, sin que las prisas se notaran en el resultado.',
+      solucion: 'Convertí el servicio en algo que se entiende a la primera: qué es, para quién y cómo empezar. Repartí los puntos de contacto por toda la página para que pedir información nunca esté a más de un clic, y apoyé todo en fotografía de operación real que demuestra que esto ya funciona.',
       entregables: [
         'Arquitectura de contenido y redacción de la propuesta de valor',
-        'Diseño de interfaz responsive (escritorio, tablet y móvil)',
-        'Desarrollo a medida, sin plantillas',
+        'Diseño de interfaz responsive a medida, sin plantillas',
+        'Secciones de soluciones, autoridades y registro CNE',
         'Formulario de contacto y enlace directo a WhatsApp',
         'Optimización de carga, SEO técnico y despliegue',
       ],
@@ -72,18 +80,18 @@
       cliente: "Club of Swimming Dolphin's",
       rol: 'Diseño y desarrollo',
       tipo: 'Sitio institucional',
-      resumen: 'La cara digital de una escuela de natación de barrio: horarios, niveles e inscripciones explicados de forma que cualquier familia los entienda en un minuto.',
-      reto: 'Las decisiones de inscripción las toman padres y madres con poco tiempo. El sitio tenía que resolver de inmediato las dudas de siempre —edades, horarios, costos, qué llevar— y al mismo tiempo transmitir el ambiente del club, que es su mejor argumento de venta.',
-      solucion: 'Una navegación breve, con la información práctica al frente y un tono cálido acorde a una escuela infantil. La paleta se construyó alrededor del azul del agua, con fotografía de las instalaciones y llamadas a la acción hacia WhatsApp, el canal que el club ya usaba para inscribir.',
+      resumen: 'Un sitio que trabaja como un recepcionista que nunca cierra: resuelve en un minuto las dudas de cualquier familia y la deja lista para inscribirse.',
+      reto: 'Las inscripciones las deciden papás y mamás con poco tiempo y muchas dudas: edades, horarios, costos, qué llevar. Cada pregunta que el sitio no respondía era una llamada de más para el club y una familia que seguía buscando en otro lado.',
+      solucion: 'Puse al frente lo que una familia necesita para decidir, en un tono cálido de escuela infantil, y dejé la inscripción a un toque por WhatsApp, el canal que el club ya usaba. La fotografía de las instalaciones hace el resto: transmite el ambiente que es su mejor argumento de venta.',
       entregables: [
-        'Diseño de interfaz responsive orientado a móvil',
-        'Secciones de niveles, horarios e instalaciones',
-        'Contacto e inscripción directa por WhatsApp',
-        'Galería de fotografías del club',
-        'Publicación y puesta a punto en producción',
+        'Dirección visual con una escena propia por sección',
+        'Hero con fotografía y simulación de agua en WebGL',
+        'Programas por edad con horarios, precios y curso de verano',
+        'Sección de equipo con los 12 entrenadores y reseñas reales de Google',
+        'Inscripción y contacto directos por WhatsApp',
       ],
       // Sin "Velocidad" ni "optimizada" hasta que la medición lo respalde (ver abajo).
-      servicios: ['Diseño de interfaz', 'Desarrollo web', 'Pensado para celular', 'Galería'],
+      servicios: ['Dirección de arte', 'Diseño de interfaz', 'Desarrollo web', 'Animación y WebGL', 'Pensado para celular'],
       // Medido el 31/08/2026: 2.5 MB de carga inicial, 21 peticiones, 7.9 MB en total.
       // No se publica: son 2.5 MB para abrir en un celular. Optimizar la galería
       // (comprimir a WebP y diferir el resto) y volver a medir antes de presumirlo.
@@ -103,50 +111,19 @@
       cliente: 'STZ — Verificación al Transporte',
       rol: 'Diseño y desarrollo',
       tipo: 'Sitio institucional',
-      resumen: 'Unidad de verificación federal en Toluca, Estado de México. Un sitio pensado para que un transportista entienda en segundos qué trámite necesita y dónde agendarlo.',
-      reto: 'Competir en un sector donde casi todos los sitios son directorios genéricos. Había que dejar claro el alcance de la unidad —verificación físico-mecánica y de emisiones contaminantes, con los tipos de autorización vigentes— y llevar al usuario a agendar sin fricción.',
-      solucion: 'Una portada que nombra el trámite con precisión y lo acompaña de un CTA de agendado permanente. El resto del sitio ordena servicios, requisitos y ubicación, con un lenguaje visual técnico pero limpio que apoya la credibilidad de una unidad autorizada.',
+      resumen: 'Un sitio que le gana al transportista en los primeros segundos: le dice qué trámite resuelve esta unidad y lo lleva a agendar antes de que busque en otro lado.',
+      reto: 'En un sector lleno de directorios genéricos, un transportista no distingue una unidad de otra. Si STZ no dejaba claro de inmediato qué trámite resuelve y dónde, el cliente se iba con el primero que sí se lo dijera.',
+      solucion: 'Nombré el trámite con precisión desde la portada y mantuve el agendado siempre a la vista. El resto ordena servicios, requisitos y ubicación para que el transportista llegue a lo que busca sin fricción, y la unidad se vea tan seria como el servicio que presta.',
       entregables: [
         'Diseño de interfaz responsive',
-        'Fichas de servicios y requisitos de verificación',
-        'Agendado de inspección y contacto directo',
-        'Ubicación, horarios y datos de la unidad',
+        'Secciones de servicios, infraestructura y normativa',
+        'Formulario de contacto con confirmación automática por correo',
+        'Agendado de inspección y datos de la unidad',
         'SEO local para Toluca y Estado de México',
       ],
       servicios: ['Diseño de interfaz', 'Desarrollo web', 'SEO local', 'Formularios'],
       // Medido el 31/08/2026: 5.6 MB de carga inicial, 19 peticiones, 25.9 MB en total.
-      // No se publica: el más pesado junto con ASHE. Las imágenes van sin comprimir.
-      metricas: [],
-      medicion: '',
-      testimonio: null,
-    },
-    {
-      slug: 'ashe',
-      nombre: 'ASHE',
-      sector: 'Unidad de Inspección Federal',
-      anio: '2024',
-      url: 'http://version2.unidaddeinspeccionfederalashe.com/',
-      imagen: 'assets/ashe.webp',
-      encuadre: 'top',
-      fondo: 'var(--card)',
-      cliente: 'ASHE — Unidad de Inspección Federal Certificada',
-      rol: 'Diseño y desarrollo',
-      tipo: 'Sitio institucional',
-      resumen: 'Inspección federal certificada para el autotransporte. Un sitio en tono oscuro, con foto de operación real, construido alrededor de una idea: cumplimiento y respaldo.',
-      reto: 'Una unidad de inspección vende confianza antes que precio. El sitio anterior no comunicaba certificación ni respaldo técnico, y los clientes llegaban a preguntar cosas que la página debía haber respondido sola.',
-      solucion: 'Una portada declarativa —"Inspección federal con estándares reales de seguridad"— sobre fotografía de campo, con dos acciones claras: solicitar inspección o revisar servicios. El resto del sitio detalla el proceso de inspección y la infraestructura, apoyado en una paleta oscura con acento ámbar que separa a ASHE del resto del sector.',
-      entregables: [
-        'Identidad digital y dirección de arte del sitio',
-        'Diseño de interfaz responsive en tema oscuro',
-        'Secciones de servicios, proceso e infraestructura',
-        'Solicitud de inspección y contacto',
-        'Galería de instalaciones y equipo',
-      ],
-      servicios: ['Dirección de arte', 'Diseño de interfaz', 'Desarrollo web', 'Fotografía dirigida', 'SEO técnico'],
-      // Medido el 31/08/2026: 1.9 MB de carga inicial, 24 peticiones, 26.5 MB en total.
-      // No se publica. Además el sitio sigue en http:// y en un subdominio
-      // "version2.": sin HTTPS, Chrome lo marca como "no seguro". Es lo primero
-      // que habría que resolver con este cliente.
+      // No se publica: de los más pesados. Las imágenes van sin comprimir.
       metricas: [],
       medicion: '',
       testimonio: null,
@@ -163,17 +140,17 @@
       cliente: 'ZAME — Unidad de Verificación Federal',
       rol: 'Diseño y desarrollo',
       tipo: 'Sitio institucional',
-      resumen: 'Unidad de verificación federal en Ciudad de México, especializada en servicios al transporte federal: inspección físico-mecánica y de emisiones contaminantes.',
-      reto: 'Explicar un servicio regulado a un público que llega con prisa y con una duda muy concreta: si esta unidad puede resolverle el trámite. Todo el contenido técnico tenía que ser legible sin perder el peso institucional que el sector exige.',
-      solucion: 'Un diseño claro, de mucho aire y tipografía amable, donde el tipo de autorización se muestra desde la portada. La navegación separa servicios, contacto y galería para que cada visitante llegue directo a lo que busca.',
+      resumen: 'Un sitio que responde de inmediato la única duda con la que llega un transportista —si esta unidad le resuelve el trámite— y lo deja listo para agendar.',
+      reto: 'Un transportista llega con prisa y una sola pregunta: si esta unidad puede resolverle el trámite. Si el sitio no se lo confirmaba rápido, ZAME perdía a un cliente que ya estaba listo para agendar.',
+      solucion: 'Mostré el tipo de autorización desde la portada y separé servicios, contacto y galería para que cada visitante llegue directo a lo suyo. Mucho aire y tipografía legible para que el peso institucional sume confianza en vez de estorbar la decisión.',
       entregables: [
         'Diseño de interfaz responsive',
-        'Presentación de servicios y alcances de la unidad',
-        'Contacto directo y datos de la unidad',
-        'Galería de instalaciones',
+        'Secciones de servicios, inspección y nosotros',
+        'Normatividad oficial descargable (NOMs en PDF)',
+        'Galería de instalaciones y formulario de contacto por correo',
         'SEO técnico',
       ],
-      servicios: ['Diseño de interfaz', 'Desarrollo web', 'SEO técnico', 'Contenido'],
+      servicios: ['Diseño de interfaz', 'Desarrollo web', 'SEO técnico', 'Galería', 'Formularios'],
       // Medido el 31/08/2026: 6.5 MB de carga inicial, 16 peticiones. No hay
       // imágenes diferidas, así que todo eso se baja de golpe al abrir.
       // No se publica hasta optimizar y volver a medir.
@@ -195,6 +172,12 @@
 
   if (i === -1) {
     window.location.replace('index.html#trabajo');
+    return;
+  }
+
+  // Productos propios (plantillas) tienen su propia página de venta
+  if (PROYECTOS[i].pagina) {
+    window.location.replace(PROYECTOS[i].pagina);
     return;
   }
 
@@ -338,7 +321,7 @@
   const pintarSalto = (campo, proyecto) => {
     const el = document.querySelector('[data-p-nav="' + campo + '"]');
     if (!el) return;
-    el.setAttribute('href', 'proyecto.html?p=' + proyecto.slug);
+    el.setAttribute('href', proyecto.pagina || 'proyecto.html?p=' + proyecto.slug);
     const nombre = el.querySelector('[data-p-nav-nombre]');
     if (nombre) nombre.textContent = proyecto.nombre;
   };

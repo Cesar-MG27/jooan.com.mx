@@ -1200,6 +1200,43 @@ html.js [data-hero-in] {
 .wk-media:hover::after {
   opacity: 1;
 }
+/* Invitación a la ficha: una pastilla que aparece al pasar el cursor
+   (o al enfocar con teclado). En pantallas táctiles no hay hover, así
+   que se queda visible. El texto sale de data-hint en el HTML. */
+.wk-media[data-hint]::before {
+  content: attr(data-hint) "  →";
+  position: absolute;
+  left: clamp(12px, 1.4vw, 20px);
+  bottom: clamp(12px, 1.4vw, 20px);
+  z-index: 2;
+  padding: 11px 18px;
+  border-radius: 100px;
+  background: var(--accent);
+  color: var(--on-ink);
+  font-size: 14px;
+  font-weight: 500;
+  letter-spacing: -0.01em;
+  white-space: pre;
+  pointer-events: none;
+  opacity: 0;
+  transform: translateY(10px);
+  transition:
+    opacity 0.35s ease,
+    transform 0.45s var(--ease);
+}
+.wk-media[data-hint]:hover::before,
+.wk-media[data-hint]:focus-visible::before {
+  opacity: 1;
+  transform: none;
+}
+@media (hover: none) {
+  .wk-media[data-hint]::before {
+    opacity: 1;
+    transform: none;
+    padding: 8px 14px;
+    font-size: 13px;
+  }
+}
 
 /* Columna de texto: nombre, giro y dato y, debajo, separado por un filete,
    el año y las acciones. Se desliza al revés que la imagen. */
@@ -1230,6 +1267,72 @@ html.js [data-hero-in] {
    medición real: si el proyecto no la trae, la línea no se escribe. */
 .wk-metric {
   margin-top: 9px;
+  font-family: var(--mono);
+  font-size: 12px;
+  letter-spacing: 0.06em;
+  color: var(--accent);
+}
+/* Tarjetas de producto propio (plantillas): lo que las separa de un
+   proyecto de cliente es la etiqueta de disponibilidad sobre la imagen,
+   el texto de lo que gana el cliente y un botón relleno para apartarla. */
+.wk-badge {
+  position: absolute;
+  top: clamp(12px, 1.4vw, 20px);
+  left: clamp(12px, 1.4vw, 20px);
+  z-index: 2;
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  padding: 9px 14px 9px 12px;
+  border-radius: 100px;
+  background: rgba(13, 12, 10, 0.62);
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
+  color: var(--on-ink);
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  pointer-events: none;
+}
+.wk-badge i {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  flex: none;
+  background: var(--accent);
+  animation: pulse 2s ease-in-out infinite;
+}
+.wk-buy {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 11px 18px;
+  border-radius: 100px;
+  background: var(--accent);
+  color: var(--on-ink);
+  font-size: 14px;
+  font-weight: 500;
+  letter-spacing: -0.01em;
+  transition:
+    background 0.3s ease,
+    gap 0.3s var(--ease),
+    transform 0.3s var(--ease);
+}
+.wk-buy:hover {
+  background: var(--accent-deep);
+  gap: 11px;
+  transform: translateY(-1px);
+}
+.wk-pitch {
+  margin-top: 16px;
+  max-width: 42ch;
+  font-size: clamp(15px, 1.05vw, 17px);
+  line-height: 1.55;
+  color: var(--tx-2);
+}
+.wk-offer {
+  margin-top: 14px;
   font-family: var(--mono);
   font-size: 12px;
   letter-spacing: 0.06em;
@@ -2373,6 +2476,144 @@ html.js [data-proyecto] {
   color: inherit;
 }
 
+/* Ficha en dos columnas (escritorio): la imagen es la que vende, así que
+   se lleva todo el alto de la pantalla y todo el ancho que deja la
+   columna del texto. La nav se compacta y vive solo sobre esa columna;
+   su borde superior queda a la altura del de la imagen (--pj-edge).
+   La imagen va al ancho de su columna en 5:4 (más alta que la captura:
+   recorta un poco los lados) y su alto se limita al de la pantalla.
+   En tablet y móvil vuelve a una sola columna, con la imagen en 16:9. */
+.pj-split-page {
+  --pj-edge: clamp(32px, 5vh, 64px);
+  --pj-copy: clamp(420px, 32vw, 640px);
+}
+.pj-split-page .nav.pj-nav {
+  left: auto;
+  width: var(--pj-copy);
+  padding: var(--pj-edge) var(--gut) 14px 0;
+  background: color-mix(in srgb, var(--paper) 88%, transparent);
+  border-bottom: 0;
+}
+.pj-split-page .pj-nav .nav-clock {
+  display: none;
+}
+/* En la nav compacta el logo deja de flotar al centro: toma su lugar
+   entre "Trabajo" y los controles para no encimarse con ellos. */
+.pj-split-page .pj-nav .nav-logo {
+  position: static;
+  transform: none;
+}
+.pj-split-page .pj-nav .nav-right {
+  gap: 20px;
+}
+/* El contacto del header va como enlace subrayado, no como píldora */
+.pj-split-page .pj-nav .nav-pill {
+  border: 0;
+  border-radius: 0;
+  padding: 0 0 3px;
+  opacity: 1;
+  border-bottom: 1px solid currentColor;
+  transition: color 0.3s ease, border-color 0.3s ease;
+}
+.pj-split-page .pj-nav .nav-pill:hover {
+  color: var(--accent);
+  border-color: var(--accent);
+}
+.pj-split {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) var(--pj-copy);
+  background: var(--paper);
+  color: var(--tx);
+}
+.pj-aside-in {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  padding: var(--pj-edge) clamp(28px, 3.4vw, 64px) var(--pj-edge) var(--gut);
+}
+.pj-aside .pj-shot {
+  flex: none;
+  width: 100%;
+  min-height: 0;
+  aspect-ratio: 5 / 4;
+  max-height: calc(100vh - 2 * var(--pj-edge) - 44px);
+}
+.pj-info {
+  padding: 0 var(--gut) 0 0;
+}
+.pj-info .pj-head,
+.pj-info .pj-body {
+  padding-left: 0;
+  padding-right: 0;
+  background: none;
+}
+.pj-info .pj-head {
+  padding-top: calc(var(--pj-edge) + 96px);
+}
+.pj-info .pj-tag {
+  border-top: 0;
+  padding-top: 0;
+}
+.pj-info .pj-title {
+  margin-top: clamp(22px, 3.4vh, 40px);
+  font-size: clamp(38px, 3.6vw, 72px);
+}
+.pj-info .pj-lead {
+  margin-top: clamp(24px, 3.6vh, 40px);
+}
+.pj-info .pj-lead p {
+  font-size: clamp(16px, 1.15vw, 20px);
+}
+/* En la columna angosta todo va en una sola columna de lectura */
+.pj-info .pj-cols,
+.pj-info .pv-feats {
+  grid-template-columns: minmax(0, 1fr);
+  gap: clamp(32px, 4vh, 48px);
+}
+.pj-info .pv-feats {
+  gap: 16px;
+}
+@supports (height: 100svh) {
+  .pj-aside-in {
+    height: 100svh;
+  }
+  .pj-aside .pj-shot {
+    max-height: calc(100svh - 2 * var(--pj-edge) - 44px);
+  }
+}
+@media (max-width: 1024px) {
+  .pj-split-page .pj-nav .nav-logo {
+    position: absolute;
+    transform: translate(-50%, -50%);
+  }
+  .pj-split-page .nav.pj-nav {
+    left: 0;
+    width: auto;
+    padding: 18px clamp(20px, 5vw, 48px);
+    border-bottom: 1px solid rgba(var(--tx-rgb), 0.08);
+  }
+  .pj-split {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .pj-aside-in {
+    position: static;
+    height: auto;
+    padding: clamp(96px, 13vh, 124px) var(--gut) 0;
+  }
+  .pj-aside .pj-shot {
+    aspect-ratio: 16 / 9;
+    max-height: none;
+  }
+  .pj-info {
+    padding: 0 var(--gut);
+  }
+  .pj-info .pj-head {
+    padding-top: clamp(44px, 7vh, 72px);
+  }
+}
+
 .pj-facts {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
@@ -2556,6 +2797,67 @@ html.js [data-proyecto] {
   border-bottom: 1px solid rgba(235, 229, 215, 0.3);
   padding-bottom: 4px;
 }
+/* --- Página de producto (plantilla-almavera.html) ---
+   Reutiliza la ficha (.pj-*); aquí solo lo propio de vender: el aviso
+   de lugares disponibles y la rejilla de beneficios. */
+.pv-seats {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  color: var(--tx);
+}
+.pv-seats i {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  flex: none;
+  background: var(--accent);
+  animation: pulse 2s ease-in-out infinite;
+}
+.pv-seats--ink {
+  margin-bottom: 22px;
+  font-family: var(--mono);
+  font-size: 12px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--on-ink);
+}
+.pv-close {
+  margin-top: 0;
+  border-top: 0;
+  padding-top: 0;
+}
+.pv-feats {
+  margin-top: clamp(28px, 4vh, 44px);
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: clamp(16px, 2vw, 28px);
+}
+.pv-feat {
+  padding: clamp(24px, 2.4vw, 36px);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+}
+.pv-feat-n {
+  font-family: var(--mono);
+  font-size: 12px;
+  letter-spacing: 0.12em;
+  color: var(--accent);
+}
+.pv-feat h3 {
+  margin-top: 18px;
+  font-size: clamp(21px, 1.7vw, 27px);
+  font-weight: 600;
+  letter-spacing: -0.025em;
+  line-height: 1.12;
+}
+.pv-feat p {
+  margin-top: 14px;
+  font-size: clamp(15px, 1.1vw, 17px);
+  line-height: 1.55;
+  color: var(--tx-2);
+}
+
 /* Página 404 */
 .err {
   min-height: 100vh;

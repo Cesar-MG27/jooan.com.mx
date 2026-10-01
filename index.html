@@ -312,8 +312,35 @@
 
     <div data-ref="workRow" class="wk-row">
 
+      <!-- Alma Vera: plantilla propia, edición limitada a siete estudios. Sin
+           precio a propósito: la tarjeta invita a ver el demo y a apartarla.
+           ⚠ Son 7 lugares. Al vender cada una, baja el número aquí, en
+           plantilla-almavera.html y en el aria-label; con la última vendida
+           retira la etiqueta y el botón de apartar. -->
       <article class="wk-card">
-        <a data-cta="trabajo_metroenergy_imagen" class="wk-media" href="proyecto.html?p=metroenergy" aria-label="Ver ficha técnica de MetroEnergy Autoconsumos">
+        <a data-cta="trabajo_almavera_imagen" data-hint="Conocer la plantilla" class="wk-media" href="plantilla-almavera.html" aria-label="Conocer la plantilla Alma Vera, disponible: quedan 7 lugares">
+          <span class="wk-badge" aria-hidden="true"><i></i>Disponible · quedan 7 lugares</span>
+          <img class="wk-img" src="assets/almavera-mockup.webp" alt="Sitio Alma Vera, plantilla premium para fotografía de bodas, abierto en una laptop" width="1672" height="940" loading="lazy" decoding="async">
+        </a>
+        <div class="wk-meta">
+          <div>
+            <h3 class="wk-title">Alma Vera</h3>
+            <p class="wk-sector">Plantilla premium · Fotografía de bodas</p>
+            <p class="wk-pitch">Cambias fotos y textos tú mismo desde un panel, y cada pareja entra a su propia galería privada con usuario y contraseña. Tu estudio, al nivel de lo que cobras.</p>
+            <p class="wk-offer">Se adapta a tu marca, tu ciudad y tus bodas</p>
+          </div>
+          <div class="wk-meta-end">
+            <div class="wk-year">2026</div>
+            <div class="wk-acts">
+              <a data-cta="trabajo_almavera_conocer" class="card-act" href="plantilla-almavera.html">Conocer la plantilla <span aria-hidden="true">→</span></a>
+              <a data-cta="trabajo_almavera_apartar" class="wk-buy" href="https://wa.me/525634559095?text=Hola%20joan%2C%20vi%20Alma%20Vera%20en%20tu%20portafolio%20y%20quiero%20saber%20si%20a%C3%BAn%20hay%20lugar%20para%20mi%20estudio." target="_blank" rel="noopener">Apartar la mía <span aria-hidden="true">→</span></a>
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <article class="wk-card">
+        <a data-cta="trabajo_metroenergy_imagen" data-hint="Ver ficha técnica" class="wk-media" href="proyecto.html?p=metroenergy" aria-label="Ver ficha técnica de MetroEnergy Autoconsumos">
           <img class="wk-img" src="assets/autoconsumos.webp" alt="Sitio web de MetroEnergy Autoconsumos, servicio de autoconsumo de diésel" width="1600" height="900" loading="lazy" decoding="async">
         </a>
         <div class="wk-meta">
@@ -325,7 +352,7 @@
           <div class="wk-meta-end">
             <div class="wk-year">2026</div>
             <div class="wk-acts">
-              <a data-cta="trabajo_metroenergy_ficha" class="card-act" href="proyecto.html?p=metroenergy">Ver proyecto <span aria-hidden="true">→</span></a>
+              <a data-cta="trabajo_metroenergy_ficha" class="card-act" href="proyecto.html?p=metroenergy">Ver ficha técnica <span aria-hidden="true">→</span></a>
               <a data-cta="trabajo_metroenergy_sitio" class="card-act card-act--alt" href="https://autoconsumodiesel.com.mx/" target="_blank" rel="noopener">Visitar sitio <span aria-hidden="true">↗</span></a>
             </div>
           </div>
@@ -333,7 +360,7 @@
       </article>
 
       <article class="wk-card">
-        <a data-cta="trabajo_dolphins_imagen" class="wk-media wk-media--deep" href="proyecto.html?p=dolphins" aria-label="Ver ficha técnica de Club of Swimming Dolphin's">
+        <a data-cta="trabajo_dolphins_imagen" data-hint="Ver ficha técnica" class="wk-media wk-media--deep" href="proyecto.html?p=dolphins" aria-label="Ver ficha técnica de Club of Swimming Dolphin's">
           <img class="wk-img" src="assets/dolphins-mockup.webp" alt="Sitio web del Club of Swimming Dolphin's, escuela de natación en Iztapalapa" width="1600" height="900" loading="lazy" decoding="async">
         </a>
         <div class="wk-meta">
@@ -344,7 +371,7 @@
           <div class="wk-meta-end">
             <div class="wk-year">2026</div>
             <div class="wk-acts">
-              <a data-cta="trabajo_dolphins_ficha" class="card-act" href="proyecto.html?p=dolphins">Ver proyecto <span aria-hidden="true">→</span></a>
+              <a data-cta="trabajo_dolphins_ficha" class="card-act" href="proyecto.html?p=dolphins">Ver ficha técnica <span aria-hidden="true">→</span></a>
               <a data-cta="trabajo_dolphins_sitio" class="card-act card-act--alt" href="https://acuaticadelfinesiztapalapa.com/" target="_blank" rel="noopener">Visitar sitio <span aria-hidden="true">↗</span></a>
             </div>
           </div>
@@ -352,7 +379,7 @@
       </article>
 
       <article class="wk-card">
-        <a data-cta="trabajo_stz_toluca_imagen" class="wk-media" href="proyecto.html?p=stz-toluca" aria-label="Ver ficha técnica de STZ Toluca">
+        <a data-cta="trabajo_stz_toluca_imagen" data-hint="Ver ficha técnica" class="wk-media" href="proyecto.html?p=stz-toluca" aria-label="Ver ficha técnica de STZ Toluca">
           <img class="wk-img wk-img--top" src="assets/stz.webp" alt="Sitio web de STZ Toluca, unidad de verificación federal al transporte" width="1200" height="675" loading="lazy" decoding="async">
         </a>
         <div class="wk-meta">
@@ -363,34 +390,16 @@
           <div class="wk-meta-end">
             <div class="wk-year">2026</div>
             <div class="wk-acts">
-              <a data-cta="trabajo_stz_toluca_ficha" class="card-act" href="proyecto.html?p=stz-toluca">Ver proyecto <span aria-hidden="true">→</span></a>
+              <a data-cta="trabajo_stz_toluca_ficha" class="card-act" href="proyecto.html?p=stz-toluca">Ver ficha técnica <span aria-hidden="true">→</span></a>
               <a data-cta="trabajo_stz_toluca_sitio" class="card-act card-act--alt" href="https://verificacionaltransportezame.com.mx/" target="_blank" rel="noopener">Visitar sitio <span aria-hidden="true">↗</span></a>
             </div>
           </div>
         </div>
       </article>
 
-      <article class="wk-card">
-        <a data-cta="trabajo_ashe_imagen" class="wk-media" href="proyecto.html?p=ashe" aria-label="Ver ficha técnica de ASHE">
-          <img class="wk-img wk-img--top" src="assets/ashe.webp" alt="Sitio web de ASHE, unidad de inspección federal certificada" width="1200" height="675" loading="lazy" decoding="async">
-        </a>
-        <div class="wk-meta">
-          <div>
-            <h3 class="wk-title">ASHE</h3>
-            <p class="wk-sector">Unidad de Inspección Federal</p>
-          </div>
-          <div class="wk-meta-end">
-            <div class="wk-year">2024</div>
-            <div class="wk-acts">
-              <a data-cta="trabajo_ashe_ficha" class="card-act" href="proyecto.html?p=ashe">Ver proyecto <span aria-hidden="true">→</span></a>
-              <a data-cta="trabajo_ashe_sitio" class="card-act card-act--alt" href="http://version2.unidaddeinspeccionfederalashe.com/" target="_blank" rel="noopener">Visitar sitio <span aria-hidden="true">↗</span></a>
-            </div>
-          </div>
-        </div>
-      </article>
 
       <article class="wk-card">
-        <a data-cta="trabajo_zame_imagen" class="wk-media" href="proyecto.html?p=zame" aria-label="Ver ficha técnica de ZAME">
+        <a data-cta="trabajo_zame_imagen" data-hint="Ver ficha técnica" class="wk-media" href="proyecto.html?p=zame" aria-label="Ver ficha técnica de ZAME">
           <img class="wk-img wk-img--top" src="assets/zame.webp" alt="Sitio web de ZAME, unidad de verificación federal en Ciudad de México" width="1200" height="675" loading="lazy" decoding="async">
         </a>
         <div class="wk-meta">
@@ -401,7 +410,7 @@
           <div class="wk-meta-end">
             <div class="wk-year">2024</div>
             <div class="wk-acts">
-              <a data-cta="trabajo_zame_ficha" class="card-act" href="proyecto.html?p=zame">Ver proyecto <span aria-hidden="true">→</span></a>
+              <a data-cta="trabajo_zame_ficha" class="card-act" href="proyecto.html?p=zame">Ver ficha técnica <span aria-hidden="true">→</span></a>
               <a data-cta="trabajo_zame_sitio" class="card-act card-act--alt" href="https://unidaddeinspeccionzame.com/" target="_blank" rel="noopener">Visitar sitio <span aria-hidden="true">↗</span></a>
             </div>
           </div>
@@ -709,10 +718,10 @@
         <div>
           <div class="ft-label">Proyectos</div>
           <ul class="ft-list">
+            <li><a data-cta="footer_proyecto_almavera" class="ft-link" href="plantilla-almavera.html">Alma Vera <small>2026</small></a></li>
             <li><a data-cta="footer_proyecto_metroenergy" class="ft-link" href="proyecto.html?p=metroenergy">MetroEnergy <small>2026</small></a></li>
             <li><a data-cta="footer_proyecto_dolphins" class="ft-link" href="proyecto.html?p=dolphins">Dolphin's <small>2026</small></a></li>
             <li><a data-cta="footer_proyecto_stz_toluca" class="ft-link" href="proyecto.html?p=stz-toluca">STZ Toluca <small>2026</small></a></li>
-            <li><a data-cta="footer_proyecto_ashe" class="ft-link" href="proyecto.html?p=ashe">ASHE <small>2024</small></a></li>
             <li><a data-cta="footer_proyecto_zame" class="ft-link" href="proyecto.html?p=zame">ZAME <small>2024</small></a></li>
           </ul>
         </div>

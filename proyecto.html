@@ -56,7 +56,7 @@
   gtag('config', 'G-YN6P41N6KZ');
 </script>
 </head>
-<body data-pagina="proyecto">
+<body data-pagina="proyecto" class="pj-split-page">
 
 <div data-ref="root" class="page">
 
@@ -84,108 +84,117 @@
 
   <main id="inicio" data-proyecto>
 
-    <!-- ENCABEZADO DE FICHA -->
-    <section class="pj-head">
-      <div class="pj-tag">
-        <span>Ficha técnica</span>
-        <span class="pj-tag-count"><span data-p="indice">01</span> / <span data-p="total">05</span></span>
-      </div>
+    <!-- FICHA EN DOS COLUMNAS: la imagen se queda fija a la izquierda
+         mientras la información sube a la derecha. -->
+    <div class="pj-split">
+      <aside class="pj-aside">
+        <div class="pj-aside-in">
+          <div class="wk-media pj-shot" data-p="imagen-fondo">
+            <img class="wk-img wk-img--top" data-p="imagen" src="" alt="" width="1600" height="900" decoding="async">
+          </div>
+          <div class="pj-shot-meta">
+            <a data-cta="ficha_dominio_visitar" data-p="url" href="#" target="_blank" rel="noopener" class="lk-dim"><span data-p="dominio"></span> ↗</a>
+            <span data-p="anio">—</span>
+          </div>
+        </div>
+      </aside>
 
-      <h1 class="pj-title" data-p="nombre">Proyecto</h1>
-      <p class="pj-sector" data-p="sector">Sector</p>
+      <div class="pj-info">
 
-      <div class="pj-lead">
-        <p data-p="resumen"></p>
-        <div class="pj-actions">
-          <a data-cta="ficha_sitio_visitar" data-p="url" href="#" target="_blank" rel="noopener" class="btn-submit">Visitar sitio <span aria-hidden="true">↗</span></a>
-          <a data-cta="ficha_quiero_algo_asi" href="https://wa.me/525634559095" target="_blank" rel="noopener" class="cta-underline">Quiero algo así <span aria-hidden="true">→</span></a>
-        </div>
-      </div>
-    </section>
+        <!-- ENCABEZADO DE FICHA -->
+        <section class="pj-head">
+          <div class="pj-tag">
+            <span>Ficha técnica</span>
+            <span class="pj-tag-count"><span data-p="indice">01</span> / <span data-p="total">05</span></span>
+          </div>
 
-    <!-- IMAGEN PRINCIPAL -->
-    <section class="pj-body pj-body--shot">
-      <div class="wk-media pj-shot" data-p="imagen-fondo">
-        <img class="wk-img wk-img--top" data-p="imagen" src="" alt="" width="1600" height="900" decoding="async">
-      </div>
-      <div class="pj-shot-meta">
-        <a data-cta="ficha_dominio_visitar" data-p="url" href="#" target="_blank" rel="noopener" class="lk-dim"><span data-p="dominio"></span> ↗</a>
-        <span data-p="anio">—</span>
-      </div>
-    </section>
+          <h1 class="pj-title" data-p="nombre">Proyecto</h1>
+          <p class="pj-sector" data-p="sector">Sector</p>
 
-    <!-- METADATOS -->
-    <section class="pj-body">
-      <div class="pj-facts">
-        <div>
-          <div class="pj-fact-l">Cliente</div>
-          <div class="pj-fact-v" data-p="cliente"></div>
-        </div>
-        <div>
-          <div class="pj-fact-l">Sector</div>
-          <div class="pj-fact-v" data-p="sector"></div>
-        </div>
-        <div>
-          <div class="pj-fact-l">Año</div>
-          <div class="pj-fact-v" data-p="anio"></div>
-        </div>
-        <div>
-          <div class="pj-fact-l">Rol</div>
-          <div class="pj-fact-v" data-p="rol"></div>
-        </div>
-        <div>
-          <div class="pj-fact-l">Tipo</div>
-          <div class="pj-fact-v" data-p="tipo"></div>
-        </div>
-      </div>
-    </section>
+          <div class="pj-lead">
+            <p data-p="resumen"></p>
+            <div class="pj-actions">
+              <a data-cta="ficha_sitio_visitar" data-p="url" href="#" target="_blank" rel="noopener" class="btn-submit">Visitar sitio <span aria-hidden="true">↗</span></a>
+              <a data-cta="ficha_quiero_algo_asi" href="https://wa.me/525634559095" target="_blank" rel="noopener" class="cta-underline">Quiero algo así <span aria-hidden="true">→</span></a>
+            </div>
+          </div>
+        </section>
 
-    <!-- RETO / SOLUCIÓN -->
-    <section class="pj-body">
-      <div class="pj-cols">
-        <div data-reveal>
-          <h2 class="eyebrow">(01) — El reto</h2>
-          <p data-p="reto"></p>
-        </div>
-        <div data-reveal>
-          <h2 class="eyebrow">(02) — La solución</h2>
-          <p data-p="solucion"></p>
-        </div>
-      </div>
-    </section>
+        <!-- METADATOS -->
+        <section class="pj-body">
+          <div class="pj-facts">
+            <div>
+              <div class="pj-fact-l">Cliente</div>
+              <div class="pj-fact-v" data-p="cliente"></div>
+            </div>
+            <div>
+              <div class="pj-fact-l">Sector</div>
+              <div class="pj-fact-v" data-p="sector"></div>
+            </div>
+            <div>
+              <div class="pj-fact-l">Año</div>
+              <div class="pj-fact-v" data-p="anio"></div>
+            </div>
+            <div>
+              <div class="pj-fact-l">Rol</div>
+              <div class="pj-fact-v" data-p="rol"></div>
+            </div>
+            <div>
+              <div class="pj-fact-l">Tipo</div>
+              <div class="pj-fact-v" data-p="tipo"></div>
+            </div>
+          </div>
+        </section>
 
-    <!-- ENTREGABLES + SERVICIOS -->
-    <section class="pj-body pj-body--wide">
-      <div class="pj-cols pj-cols--top">
-        <div data-reveal>
-          <h2 class="eyebrow">(03) — Qué incluyó</h2>
-          <ul class="pj-list" data-p-list="entregables"></ul>
-        </div>
-        <div data-reveal>
-          <h2 class="eyebrow">(04) — Servicios</h2>
-          <div class="pj-chips" data-p-list="servicios"></div>
-        </div>
-      </div>
-    </section>
+        <!-- RETO / SOLUCIÓN -->
+        <section class="pj-body">
+          <div class="pj-cols">
+            <div data-reveal>
+              <h2 class="eyebrow">(01) — El reto</h2>
+              <p data-p="reto"></p>
+            </div>
+            <div data-reveal>
+              <h2 class="eyebrow">(02) — La solución</h2>
+              <p data-p="solucion"></p>
+            </div>
+          </div>
+        </section>
 
-    <!-- RESULTADOS MEDIDOS
-         proyectos.js retira esta sección completa si el proyecto no trae
-         medición: mejor no decir nada que publicar una cifra estimada. -->
-    <section class="pj-body pj-body--wide" data-p-seccion="resultados">
-      <div data-reveal>
-        <h2 class="eyebrow">(05) — Resultados medidos</h2>
-        <div class="pj-metrics" data-p-list="metricas"></div>
-        <small class="pj-medicion" data-p="medicion"></small>
-      </div>
-    </section>
+        <!-- ENTREGABLES + SERVICIOS -->
+        <section class="pj-body pj-body--wide">
+          <div class="pj-cols pj-cols--top">
+            <div data-reveal>
+              <h2 class="eyebrow">(03) — Qué incluyó</h2>
+              <ul class="pj-list" data-p-list="entregables"></ul>
+            </div>
+            <div data-reveal>
+              <h2 class="eyebrow">(04) — Servicios</h2>
+              <div class="pj-chips" data-p-list="servicios"></div>
+            </div>
+          </div>
+        </section>
 
-    <!-- VOZ DEL CLIENTE — oculta hasta que exista una cita real -->
-    <section class="pj-body pj-body--wide" data-p-quote hidden>
-      <figure class="pj-quote" data-reveal>
-        <blockquote data-p-quote-cita></blockquote>
-        <figcaption data-p-quote-autor></figcaption>
-      </figure>
-    </section>
+        <!-- RESULTADOS MEDIDOS
+             proyectos.js retira esta sección completa si el proyecto no trae
+             medición: mejor no decir nada que publicar una cifra estimada. -->
+        <section class="pj-body pj-body--wide" data-p-seccion="resultados">
+          <div data-reveal>
+            <h2 class="eyebrow">(05) — Resultados medidos</h2>
+            <div class="pj-metrics" data-p-list="metricas"></div>
+            <small class="pj-medicion" data-p="medicion"></small>
+          </div>
+        </section>
+
+        <!-- VOZ DEL CLIENTE — oculta hasta que exista una cita real -->
+        <section class="pj-body pj-body--wide" data-p-quote hidden>
+          <figure class="pj-quote" data-reveal>
+            <blockquote data-p-quote-cita></blockquote>
+            <figcaption data-p-quote-autor></figcaption>
+          </figure>
+        </section>
+
+      </div>
+    </div>
 
     <!-- SALTO ENTRE PROYECTOS -->
     <section data-nav-dark class="pj-next">
@@ -243,10 +252,10 @@
         <div>
           <div class="ft-label">Proyectos</div>
           <ul class="ft-list">
+            <li><a data-cta="footer_proyecto_almavera" class="ft-link" href="plantilla-almavera.html">Alma Vera <small>2026</small></a></li>
             <li><a data-cta="footer_proyecto_metroenergy" class="ft-link" href="proyecto.html?p=metroenergy">MetroEnergy <small>2026</small></a></li>
             <li><a data-cta="footer_proyecto_dolphins" class="ft-link" href="proyecto.html?p=dolphins">Dolphin's <small>2026</small></a></li>
             <li><a data-cta="footer_proyecto_stz_toluca" class="ft-link" href="proyecto.html?p=stz-toluca">STZ Toluca <small>2026</small></a></li>
-            <li><a data-cta="footer_proyecto_ashe" class="ft-link" href="proyecto.html?p=ashe">ASHE <small>2024</small></a></li>
             <li><a data-cta="footer_proyecto_zame" class="ft-link" href="proyecto.html?p=zame">ZAME <small>2024</small></a></li>
           </ul>
         </div>
